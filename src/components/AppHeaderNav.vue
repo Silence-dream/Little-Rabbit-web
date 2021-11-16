@@ -1,5 +1,5 @@
 <template>
-  <!-- 首页 nav  -->
+  <!-- 首页 nav 首页中间内容 -->
   <ul class="app-header-nav">
     <li class="home">
       <RouterLink to="/">首页</RouterLink>

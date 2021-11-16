@@ -1,7 +1,9 @@
 <template>
+  <!-- 首页头 -->
   <header class="app-header">
     <div class="container">
       <h1 class="logo"><RouterLink to="/"></RouterLink></h1>
+      <!-- 首页中间内容 -->
       <AppHeaderNav />
       <div class="search">
         <i class="iconfont icon-search"></i>

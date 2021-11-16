@@ -13,17 +13,16 @@
 </template>
 
 <script>
+export default {
+  name: "AppHeaderSticky",
+};
+</script>
+
+<script setup>
 import AppHeaderNav from "@/components/AppHeaderNav";
 import { useWindowScroll } from "@vueuse/core";
 
-export default {
-  name: "AppHeaderSticky",
-  components: { AppHeaderNav },
-  setup() {
-    const { y: scrollTop } = useWindowScroll();
-    return { scrollTop };
-  },
-};
+const { y: scrollTop } = useWindowScroll();
 </script>
 
 <style scoped lang="less">
