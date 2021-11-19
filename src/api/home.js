@@ -35,3 +35,19 @@ export function getBanners(distributionSite = 1) {
 export function getNewGoods(limit = 4) {
   return requestWithoutToken("/home/new", "get", { limit });
 }
+
+/**
+ * 获取人气推荐数据
+ * @return {Promise}
+ */
+export function getHotGoods() {
+  return requestWithoutToken("/home/hot", "get");
+}
+
+/**
+ * 获取产品区块数据
+ * @return {Promise}
+ */
+export function getProducts() {
+  return requestWithoutToken("/home/goods", "get");
+}
