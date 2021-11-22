@@ -1,5 +1,6 @@
 <template>
-  <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱">
+  <!-- 新鲜好物 -->
+  <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱" ref="target">
     <template v-slot:right>
       <XtxMore />
     </template>
@@ -18,27 +19,27 @@
 </template>
 <script>
 import HomePanel from "@/views/home/components/HomePanel";
-import { ref } from "vue";
 import { getNewGoods } from "@/api/home";
+import useLazyData from "@/utils/useLazyData.js";
 export default {
   name: "HomeNew",
   components: { HomePanel },
   setup() {
-    const { homeNew, getData } = useHomeNew();
-    getData();
-    return { homeNew };
+    // const { homeNew, getData } = useHomeNew();
+    const { target, result: homeNew } = useLazyData(getNewGoods);
+    return { target, homeNew };
   },
 };
 
-function useHomeNew() {
-  const homeNew = ref();
-  const getData = () => {
-    getNewGoods().then((data) => {
-      homeNew.value = data.result;
-    });
-  };
-  return { homeNew, getData };
-}
+// function useHomeNew() {
+//   const homeNew = ref();
+//   const getData = () => {
+//     getNewGoods().then((data) => {
+//       homeNew.value = data.result;
+//     });
+//   };
+//   return { homeNew, getData };
+// }
 </script>
 <style scoped lang="less">
 .goods-list {

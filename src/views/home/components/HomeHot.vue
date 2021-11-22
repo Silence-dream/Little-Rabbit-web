@@ -1,6 +1,6 @@
 <template>
   <!-- 人气推荐组件  -->
-  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
+  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过" ref="target">
     <ul class="goods-list">
       <!-- 测试代码  -->
       <!--      <li>-->
@@ -32,13 +32,16 @@ export default {
 };
 </script>
 <script setup>
-import { ref } from "vue";
 import { getHotGoods } from "@/api/home.js";
+import useLazyData from "@/utils/useLazyData.js";
 // 存储人气推荐数据
-const homeHot = ref();
-getHotGoods().then((res) => {
-  homeHot.value = res.result;
-});
+// const homeHot = ref();
+// getHotGoods().then((res) => {
+//   homeHot.value = res.result;
+// });
+
+// 懒加载写法
+const { target, result: homeHot } = useLazyData(getHotGoods);
 </script>
 <style scoped lang="less">
 .goods-list {
