@@ -23,7 +23,13 @@ import HomeNew from "@/views/home/components/HomeNew";
 import HomeHot from "@/views/home/components/HomeHot";
 export default {
   name: "HomePage",
-  components: { HomeNew, HomeBanner, HomeCategory, AppLayout, HomeHot },
+  components: {
+    HomeNew,
+    HomeBanner,
+    HomeCategory,
+    AppLayout,
+    HomeHot,
+  },
 };
 </script>
 
