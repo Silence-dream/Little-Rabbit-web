@@ -36,7 +36,7 @@ export default {
 </script>
 <script setup>
 import { getHotGoods } from "@/api/home.js";
-import useLazyData from "@/utils/useLazyData.js";
+import useLazyData from "@/hooks/useLazyData.js";
 // 存储人气推荐数据
 // const homeHot = ref();
 // getHotGoods().then((res) => {

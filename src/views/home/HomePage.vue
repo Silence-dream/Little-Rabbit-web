@@ -21,9 +21,11 @@ import HomeCategory from "@/views/home/components/HomeCategory";
 import HomeBanner from "@/views/home/components/HomeBanner";
 import HomeNew from "@/views/home/components/HomeNew";
 import HomeHot from "@/views/home/components/HomeHot";
+import HomeBrand from "@/views/home/components/HomeBrand.vue";
 export default {
   name: "HomePage",
   components: {
+    HomeBrand,
     HomeNew,
     HomeBanner,
     HomeCategory,

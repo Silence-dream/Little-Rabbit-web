@@ -23,8 +23,8 @@
 <script>
 import HomePanel from "@/views/home/components/HomePanel";
 import { getNewGoods } from "@/api/home";
-import useLazyData from "@/utils/useLazyData.js";
-import HomeSkeleton from "@/components/HomeSkeleton.vue";
+import useLazyData from "@/hooks/useLazyData.js";
+import HomeSkeleton from "@/views/home/components/HomeSkeleton.vue";
 export default {
   name: "HomeNew",
   components: { HomeSkeleton, HomePanel },
