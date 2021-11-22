@@ -1,7 +1,7 @@
 <template>
   <!-- 人气推荐组件  -->
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过" ref="target">
-    <ul class="goods-list">
+    <ul class="goods-list" v-if="homeHot">
       <!-- 测试代码  -->
       <!--      <li>-->
       <!--        <RouterLink to="/">-->
@@ -21,6 +21,9 @@
         </RouterLink>
       </li>
     </ul>
+    <transition name="fade">
+      <HomeSkeleton v-if="!homeHot" />
+    </transition>
   </HomePanel>
 </template>
 

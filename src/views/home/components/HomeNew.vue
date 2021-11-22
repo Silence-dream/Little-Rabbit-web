@@ -14,6 +14,9 @@
           </RouterLink>
         </li>
       </ul>
+      <transition name="fade">
+        <HomeSkeleton v-if="!homeNew" />
+      </transition>
     </template>
   </HomePanel>
 </template>
@@ -21,9 +24,10 @@
 import HomePanel from "@/views/home/components/HomePanel";
 import { getNewGoods } from "@/api/home";
 import useLazyData from "@/utils/useLazyData.js";
+import HomeSkeleton from "@/components/HomeSkeleton.vue";
 export default {
   name: "HomeNew",
-  components: { HomePanel },
+  components: { HomeSkeleton, HomePanel },
   setup() {
     // const { homeNew, getData } = useHomeNew();
     const { target, result: homeNew } = useLazyData(getNewGoods);
