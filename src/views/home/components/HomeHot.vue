@@ -37,6 +37,7 @@ export default {
 <script setup>
 import { getHotGoods } from "@/api/home.js";
 import useLazyData from "@/hooks/useLazyData.js";
+import HomeSkeleton from "@/views/home/components/HomeSkeleton.vue";
 // 存储人气推荐数据
 // const homeHot = ref();
 // getHotGoods().then((res) => {

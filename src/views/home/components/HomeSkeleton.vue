@@ -1,5 +1,5 @@
 <template>
-  <!-- 新鲜好物和人气推荐要使用的骨架布局组件  -->
+  <!-- 骨架屏组件 -->
   <div class="home-skeleton">
     <div class="item" v-for="i in 4" :key="i" :style="{ backgroundColor: bg }">
       <XtxSkeleton
