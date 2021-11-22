@@ -12,6 +12,8 @@
     <HomeBrand />
     <!-- 产品区块 -->
     <HomeProduct />
+    <!--  最新专题  -->
+    <HomeSpecial />
   </AppLayout>
 </template>
 
@@ -23,9 +25,11 @@ import HomeNew from "@/views/home/components/HomeNew";
 import HomeHot from "@/views/home/components/HomeHot";
 import HomeBrand from "@/views/home/components/HomeBrand.vue";
 import HomeProduct from "@/views/home/components/HomeProduct.vue";
+import HomeSpecial from "@/views/home/components/HomeSpecial.vue";
 export default {
   name: "HomePage",
   components: {
+    HomeSpecial,
     HomeProduct,
     HomeBrand,
     HomeNew,

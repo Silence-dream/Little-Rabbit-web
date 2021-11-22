@@ -51,3 +51,12 @@ export function getHotGoods() {
 export function getProducts() {
   return requestWithoutToken("/home/goods", "get");
 }
+
+/**
+ * 用于获取最新专题
+ * @param limit 限制请求数据的数量
+ * @return {Promise}
+ */
+export function getSpecial(limit = 3) {
+  return requestWithoutToken("/home/special", "get", { limit });
+}
