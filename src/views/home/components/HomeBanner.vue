@@ -16,7 +16,7 @@ export default {
   name: "HomeBanner",
   setup() {
     const { banners, getData } = useBanners();
-    getData();
+    getData(1);
     return { banners };
   },
 };
