@@ -20,6 +20,11 @@
           height: '500px',
         }"
       />
+      <!--二级分类-->
+      <ShowSubCategoryList
+        :subCategories="topCategory.children"
+        v-if="topCategory"
+      />
     </div>
   </AppLayout>
 </template>
@@ -31,9 +36,10 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import useBanners from "@/hooks/useBanners";
+import ShowSubCategoryList from "@/views/category/ShowSubCategoryList.vue";
 export default {
   name: "TopCategoryPage",
-  components: { XtxBread, AppLayout },
+  components: { ShowSubCategoryList, XtxBread, AppLayout },
   setup() {
     const topCategory = useCategory();
     // banners 轮播数据
