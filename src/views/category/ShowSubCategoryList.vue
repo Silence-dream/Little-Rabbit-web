@@ -17,6 +17,7 @@ export default {
   props: {
     subCategories: {
       type: Array,
+      default: () => [],
     },
   },
 };
