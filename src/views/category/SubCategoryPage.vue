@@ -29,7 +29,7 @@ export default {
   name: "SubCategoryPage",
   components: { SubFilter, AppLayout },
   setup() {
-    // 获取面包屑导航需要的分类数据
+    // onBeforeRouteUpdate
     const category = useBread();
     const onFilterChanged = (data) => {
       console.log(data);
