@@ -13,7 +13,7 @@
         </transition>
       </XtxBread>
       <!-- 筛选条件 -->
-      <SubFilter />
+      <SubFilter @onFilterChanged="onFilterChanged" />
     </div>
   </AppLayout>
 </template>
@@ -31,7 +31,10 @@ export default {
   setup() {
     // 获取面包屑导航需要的分类数据
     const category = useBread();
-    return { category };
+    const onFilterChanged = (data) => {
+      console.log(data);
+    };
+    return { category, onFilterChanged };
   },
 };
 
