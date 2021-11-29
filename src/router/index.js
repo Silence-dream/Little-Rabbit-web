@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+
 const HomePage = () => import("@/views/home/HomePage");
 
 const routes = [
@@ -25,6 +26,10 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  // 路由切换
+  scrollBehavior: () => {
+    return { top: 0 };
+  },
 });
 
 export default router;
