@@ -3,15 +3,17 @@
     <div class="container">
       <XtxBread>
         <XtxBreadItem path="/">首页</XtxBreadItem>
-        <XtxBreadItem :path="`/category/${category.topCategory?.id}`">{{
-          category.topCategory?.name
-        }}</XtxBreadItem>
-        <transition name="fade-right" mode="out-in">
+        <XtxBreadItem :path="`/category/${category.topCategory?.id}`"
+          >{{ category.topCategory?.name }}
+        </XtxBreadItem>
+        <transition mode="out-in" name="fade-right">
           <XtxBreadItem :key="category.subCategory?.id">
             {{ category.subCategory?.name }}
           </XtxBreadItem>
         </transition>
       </XtxBread>
+      <!-- 筛选条件 -->
+      <SubFilter />
     </div>
   </AppLayout>
 </template>
@@ -21,9 +23,11 @@ import AppLayout from "@/components/AppLayout";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import SubFilter from "@/views/category/components/SubFilter.vue";
+
 export default {
   name: "SubCategoryPage",
-  components: { AppLayout },
+  components: { SubFilter, AppLayout },
   setup() {
     // 获取面包屑导航需要的分类数据
     const category = useBread();
