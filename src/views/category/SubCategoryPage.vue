@@ -14,6 +14,7 @@
       </XtxBread>
       <!-- 筛选条件 -->
       <SubFilter @onFilterChanged="onFilterChanged" />
+      <XtxCheckbox v-model="isCheckedData">仅显示有货商品</XtxCheckbox>
     </div>
   </AppLayout>
 </template>
@@ -22,7 +23,7 @@
 import AppLayout from "@/components/AppLayout";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import SubFilter from "@/views/category/components/SubFilter.vue";
 
 export default {
@@ -34,7 +35,8 @@ export default {
     const onFilterChanged = (data) => {
       console.log(data);
     };
-    return { category, onFilterChanged };
+    let isCheckedData = ref(false);
+    return { category, onFilterChanged, isCheckedData };
   },
 };
 
