@@ -25,6 +25,8 @@
         :subCategories="topCategory.children"
         v-if="topCategory"
       />
+      <!-- 二级分类商品推荐 -->
+      <RecommendGoods />
     </div>
   </AppLayout>
 </template>
@@ -32,6 +34,7 @@
 <script>
 import AppLayout from "@/components/AppLayout";
 import XtxBread from "@/components/library/XtxBread";
+import RecommendGoods from "@/views/category/components/RecommendGoods.vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
@@ -39,7 +42,7 @@ import useBanners from "@/hooks/useBanners";
 import ShowSubCategoryList from "@/views/category/ShowSubCategoryList.vue";
 export default {
   name: "TopCategoryPage",
-  components: { ShowSubCategoryList, XtxBread, AppLayout },
+  components: { ShowSubCategoryList, XtxBread, AppLayout, RecommendGoods },
   setup() {
     const topCategory = useCategory();
     // banners 轮播数据
