@@ -1,28 +1,31 @@
 import { requestWithoutToken } from "@/utils/request";
 
 /**
- * 获取一级分类的具体信息
- * @param id 一级分类ID
+ * 获取商品的详细信息
+ * @param id 商品ID
  * @return {Promise}
  */
-export function getTopCategoryById(id) {
-  return requestWithoutToken("/category", "get", { id });
+export function getGoodsDetail(id) {
+  return requestWithoutToken("/goods", "get", { id });
 }
 
 /**
- * 获取二级分类筛选条件
- * @param id 二级分类ID
+ * 获取同类商品或猜你喜欢
+ * @param id 商品ID
+ * @param limit 限制请求数据的数量
  * @return {Promise}
  */
-export function getSubCategoryFilters(id) {
-  return requestWithoutToken("/category/sub/filter", "get", { id });
+export function getRelevantGoods({ id, limit = 16 }) {
+  return requestWithoutToken("/goods/relevant", "get", { id, limit });
 }
 
 /**
- * 获取二级分类商品列表
- * @param reqParams 请求参数: 二级分类ID, 排序条件, 筛选条件、分页信息
+ * 获取榜单数据
+ * @param id 商品ID
+ * @param limit 一次请求的数据数量
+ * @param type 热销类型，1为24小时，2为周榜，3为总榜，默认为1
  * @return {Promise}
  */
-export function getGoodsList(reqParams) {
-  return requestWithoutToken("/category/goods", "post", reqParams);
+export function getHotGoods({ id, limit = 3, type }) {
+  return requestWithoutToken("/goods/hot", "get", { id, limit, type });
 }
