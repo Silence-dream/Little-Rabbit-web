@@ -17,6 +17,14 @@
       <div class="goods-list">
         <!--排序组件-->
         <SubSort @onSortChanged="onFilterSortChanged" />
+        <!-- 商品列表 -->
+        <GoodsList :goods="goodsList.items" v-if="goodsList" />
+        <!-- 无限列表加载组件 -->
+        <XtxInfiniteLoading
+          :loading="loading"
+          :finished="finished"
+          @infinite="loadMore"
+        />
       </div>
     </div>
   </AppLayout>
@@ -30,9 +38,11 @@ import { computed, ref, watch } from "vue";
 import SubFilter from "@/views/category/components/SubFilter.vue";
 import SubSort from "@/views/category/components/SubSort.vue";
 import { getGoodsList } from "@/api/category.js";
+import GoodsList from "@/views/category/components/GoodsList.vue";
+
 export default {
   name: "SubCategoryPage",
-  components: { SubFilter, AppLayout, SubSort },
+  components: { SubFilter, AppLayout, SubSort, GoodsList },
   setup() {
     // onBeforeRouteUpdate
     const category = useBread();
