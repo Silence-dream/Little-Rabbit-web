@@ -35,7 +35,7 @@ export default {
     const onFilterChanged = (data) => {
       console.log(data);
     };
-    let isCheckedData = ref(false);
+    let isCheckedData = ref(true);
     return { category, onFilterChanged, isCheckedData };
   },
 };

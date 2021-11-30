@@ -7,16 +7,33 @@
   </div>
 </template>
 <script>
-import { ref } from "vue-demi";
+import { ref, watch } from "vue";
 export default {
   name: "XtxCheckbox",
-  setup() {
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props, { emit }) {
     // 控制复选框是否选中
     const isChecked = ref(false);
     // 更改复选框状态
     function toggle() {
       isChecked.value = !isChecked.value;
+      // 给父组件传值
+      emit("update:modelValue", isChecked.value);
     }
+    // 监听 modelValue 值的变化
+    watch(
+      () => props.modelValue,
+      () => {
+        // 当值发生变化以后 将值赋值给 isChecked
+        // 因为在当前组件中我们是通过 isChecked 来控制模板状态的
+        isChecked.value = props.modelValue;
+      }
+    );
     return {
       isChecked,
       toggle,
