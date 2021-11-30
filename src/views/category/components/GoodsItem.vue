@@ -1,6 +1,6 @@
 <template>
   <!-- 单个商品组件  -->
-  <RouterLink class="goods-item" to="/">
+  <RouterLink class="goods-item" :to="`/goods/${goods.id}`">
     <img :src="goods.picture" alt="" />
     <p class="name ellipsis">{{ goods.name }}</p>
     <p class="desc ellipsis">{{ goods.desc }}</p>

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import GoodsDetailPage from "@/views/goods/GoodsDetailPage.vue";
 
 const HomePage = () => import("@/views/home/HomePage");
 
@@ -20,6 +21,10 @@ const routes = [
       import(
         /* webpackChunkName: "SubCategoryPage" */ "@/views/category/SubCategoryPage.vue"
       ),
+  },
+  {
+    path: "/goods/:id",
+    component: GoodsDetailPage,
   },
 ];
 
