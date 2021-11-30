@@ -3,7 +3,7 @@
   <div className="xtx-checkbox" @click="toggle">
     <i className="iconfont icon-checked" v-if="isChecked"></i>
     <i className="iconfont icon-unchecked" v-else></i>
-    <span></span>
+    <span><slot></slot></span>
   </div>
 </template>
 <script>
