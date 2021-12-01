@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import GoodsDetailPage from "@/views/goods/GoodsDetailPage.vue";
 
 const HomePage = () => import("@/views/home/HomePage");
 
@@ -24,7 +23,10 @@ const routes = [
   },
   {
     path: "/goods/:id",
-    component: GoodsDetailPage,
+    component: () =>
+      import(
+        /* webpackChunkName: "GoodsDetailPage" */ "@/views/goods/GoodsDetailPage.vue"
+      ),
   },
 ];
 

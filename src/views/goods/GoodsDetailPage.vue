@@ -5,9 +5,15 @@
         <!-- 面包屑 -->
         <XtxBread>
           <XtxBreadItem path="/">首页</XtxBreadItem>
-          <XtxBreadItem path="/">手机</XtxBreadItem>
-          <XtxBreadItem path="/">华为</XtxBreadItem>
-          <XtxBreadItem path="/">p30</XtxBreadItem>
+          <XtxBreadItem>
+            {{ goodsDetail?.categories[1].name }}
+          </XtxBreadItem>
+          <XtxBreadItem path="/">
+            {{ goodsDetail?.categories[0].name }}
+          </XtxBreadItem>
+          <XtxBreadItem path="/">
+            {{ goodsDetail?.name }}
+          </XtxBreadItem>
         </XtxBread>
         <!-- 商品信息 -->
         <div class="goods-info">
@@ -35,12 +41,43 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+import { ref } from "vue";
+import { getGoodsDetail } from "@/api/goods.js";
 import GoodsRelevant from "@/views/goods/components/GoodsRelevant.vue";
+import AppLayout from "@/components/AppLayout.vue";
 
 export default {
   name: "GoodsDetailPage",
-  components: { GoodsRelevant },
+  components: { GoodsRelevant, AppLayout },
+  setup() {
+    // 获取商品详情数据以及获取商品详情数据的方法
+    const { goodsDetail, getData } = useGoodsDetail();
+    // 获取路由信息对象
+    const route = useRoute();
+    // 发送请求获取商品详情信息
+    getData(route.params.id);
+    return {
+      getData,
+      goodsDetail,
+    };
+  },
 };
+// 用于获取商品详细信息的方法
+function useGoodsDetail() {
+  // 用于存储商品详情信息
+  const goodsDetail = ref();
+  // 用于获取商品详情信息的方法
+  const getData = (id) => {
+    // 向服务器端发送请求获取商品详情信息
+    getGoodsDetail(id).then((data) => {
+      // 用于存储商品详情信息
+      goodsDetail.value = data.result;
+    });
+  };
+  // 返回商品详情数据和获取商品详情数据的方法
+  return { goodsDetail, getData };
+}
 </script>
 
 <style scoped lang="less">
