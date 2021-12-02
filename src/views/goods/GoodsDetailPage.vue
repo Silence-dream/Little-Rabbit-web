@@ -18,7 +18,9 @@
         <!-- 商品信息 -->
         <div class="goods-info">
           <!-- 左侧 -->
-          <div class="media"></div>
+          <div class="media">
+            <GoodsImages :images="goodsDetail.mainPictures" />
+          </div>
           <!-- 右侧 -->
           <div class="spec"></div>
         </div>
@@ -46,10 +48,11 @@ import { ref } from "vue";
 import { getGoodsDetail } from "@/api/goods.js";
 import GoodsRelevant from "@/views/goods/components/GoodsRelevant.vue";
 import AppLayout from "@/components/AppLayout.vue";
+import GoodsImages from "@/views/goods/components/GoodsImages.vue";
 
 export default {
   name: "GoodsDetailPage",
-  components: { GoodsRelevant, AppLayout },
+  components: { GoodsImages, GoodsRelevant, AppLayout },
   setup() {
     // 获取商品详情数据以及获取商品详情数据的方法
     const { goodsDetail, getData } = useGoodsDetail();
