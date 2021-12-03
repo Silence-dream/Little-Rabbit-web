@@ -7,8 +7,11 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2143783_iq6z4ey5vu.css">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- 将调用的http请求升级成https请求并调用 -->
+    <!-- 将调用的http请求升级成https请求并调用在生产环境的时候 -->
+    <% if (process.env.NODE_ENV !== 'development') { %>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <% }
+    %>
   </head>
   <body>
     <noscript>
