@@ -26,6 +26,12 @@
           <!-- 右侧 -->
           <div class="spec">
             <GoodsInfo :goods="goodsDetail" />
+            <!-- 规格组件 skuId="1369155865461919746" -->
+            <GoodsSku
+              @onSpecChanged="onSpecChanged"
+              :skus="goodsDetail.skus"
+              :specs="goodsDetail.specs"
+            />
           </div>
         </div>
         <!-- 商品推荐 -->
@@ -55,10 +61,18 @@ import AppLayout from "@/components/AppLayout.vue";
 import GoodsImages from "@/views/goods/components/GoodsImages.vue";
 import GoodsSales from "@/views/goods/components/GoodsSales.vue";
 import GoodsInfo from "@/views/goods/components/GoodsInfo.vue";
+import GoodsSku from "@/views/goods/components/GoodsSku.vue";
 
 export default {
   name: "GoodsDetailPage",
-  components: { GoodsImages, GoodsRelevant, AppLayout, GoodsSales, GoodsInfo },
+  components: {
+    GoodsImages,
+    GoodsRelevant,
+    AppLayout,
+    GoodsSales,
+    GoodsInfo,
+    GoodsSku,
+  },
   setup() {
     // 获取商品详情数据以及获取商品详情数据的方法
     const { goodsDetail, getData } = useGoodsDetail();
