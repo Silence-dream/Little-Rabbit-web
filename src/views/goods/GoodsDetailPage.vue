@@ -19,7 +19,7 @@
         <div class="goods-info">
           <!-- 左侧 -->
           <div class="media">
-            <GoodsImages :images="goodsDetail.mainPictures" />
+            <GoodsImages :images="goodsDetail?.mainPictures" />
           </div>
           <!-- 右侧 -->
           <div class="spec"></div>
