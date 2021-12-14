@@ -20,9 +20,13 @@
           <!-- 左侧 -->
           <div class="media">
             <GoodsImages :images="goodsDetail?.mainPictures" />
+            <!-- 商品售卖组件 -->
+            <GoodsSales />
           </div>
           <!-- 右侧 -->
-          <div class="spec"></div>
+          <div class="spec">
+            <GoodsInfo :goods="goodsDetail" />
+          </div>
         </div>
         <!-- 商品推荐 -->
         <GoodsRelevant></GoodsRelevant>
@@ -49,10 +53,12 @@ import { getGoodsDetail } from "@/api/goods.js";
 import GoodsRelevant from "@/views/goods/components/GoodsRelevant.vue";
 import AppLayout from "@/components/AppLayout.vue";
 import GoodsImages from "@/views/goods/components/GoodsImages.vue";
+import GoodsSales from "@/views/goods/components/GoodsSales.vue";
+import GoodsInfo from "@/views/goods/components/GoodsInfo.vue";
 
 export default {
   name: "GoodsDetailPage",
-  components: { GoodsImages, GoodsRelevant, AppLayout },
+  components: { GoodsImages, GoodsRelevant, AppLayout, GoodsSales, GoodsInfo },
   setup() {
     // 获取商品详情数据以及获取商品详情数据的方法
     const { goodsDetail, getData } = useGoodsDetail();
