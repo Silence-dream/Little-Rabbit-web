@@ -29,8 +29,14 @@
             <!-- 规格组件 skuId="1369155865461919746" -->
             <GoodsSku
               @onSpecChanged="onSpecChanged"
-              :skus="goodsDetail.skus"
-              :specs="goodsDetail.specs"
+              :skus="goodsDetail?.skus"
+              :specs="goodsDetail?.specs"
+            />
+            <!-- 商品数量选择组件 -->
+            <XtxNumberBox
+              label="数量"
+              v-model="goodsCount"
+              :max="goodsDetail?.inventory"
             />
           </div>
         </div>
@@ -54,7 +60,7 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import { getGoodsDetail } from "@/api/goods.js";
 import GoodsRelevant from "@/views/goods/components/GoodsRelevant.vue";
 import AppLayout from "@/components/AppLayout.vue";
@@ -80,9 +86,21 @@ export default {
     const route = useRoute();
     // 发送请求获取商品详情信息
     getData(route.params.id);
+    // 当用户选择完整的规格以后 更新视图
+    const onSpecChanged = (data) => {
+      goodsDetail.value.price = data.price;
+      goodsDetail.value.oldPrice = data.oldPrice;
+      goodsDetail.value.inventory = data.inventory;
+    };
+    // 将商品详情数据开放到子组件
+    provide("goodsDetail", goodsDetail);
+    // 用于存储用户选择的商品数量
+    const goodsCount = ref(1);
     return {
       getData,
       goodsDetail,
+      onSpecChanged,
+      goodsCount,
     };
   },
 };
