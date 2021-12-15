@@ -1,16 +1,12 @@
 <template>
-  <div v-for="item in topCategory?.children" :key="item.id" class="ref-goods">
+  <div class="ref-goods" v-for="item in topCategory?.children" :key="item.id">
     <div class="head">
       <h3>- {{ item.name }} -</h3>
       <p class="tag">温暖柔软，品质之选</p>
       <XtxMore />
     </div>
     <div class="body">
-      <GoodsItem
-        v-for="goodsItem in item.goods"
-        :key="goodsItem.id"
-        :goods="goodsItem"
-      />
+      <GoodsItem :goods="goods" v-for="goods in item.goods" :key="goods.id" />
     </div>
   </div>
 </template>
@@ -18,11 +14,10 @@
 <script>
 import GoodsItem from "@/views/category/components/GoodsItem";
 import { ref } from "vue";
+import { getTopCategoryById } from "@/api/category";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
-import { getTopCategoryById } from "@/api/category.js";
-
 export default {
-  name: "CommandGoods",
+  name: "RecommendGoods",
   components: { GoodsItem },
   setup() {
     // 获取路由信息对象
@@ -34,7 +29,6 @@ export default {
     return { topCategory };
   },
 };
-
 function useTopCategory() {
   // 用于存储一级分类信息的响应式数据
   const topCategory = ref();
@@ -57,7 +51,6 @@ function useTopCategory() {
   background-color: #fff;
   margin-top: 20px;
   position: relative;
-
   h3 {
     font-size: 28px;
     color: #666;
@@ -65,14 +58,12 @@ function useTopCategory() {
     text-align: center;
     line-height: 100px;
   }
-
   .head {
     .xtx-more {
       position: absolute;
       top: 20px;
       right: 20px;
     }
-
     .tag {
       text-align: center;
       color: #999;
@@ -81,7 +72,6 @@ function useTopCategory() {
       top: -20px;
     }
   }
-
   .body {
     display: flex;
     justify-content: flex-start;

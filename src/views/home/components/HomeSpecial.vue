@@ -1,12 +1,11 @@
 <template>
-  <!--  最新专题  -->
   <HomePanel title="最新专题" ref="target">
     <template v-slot:right>
       <XtxMore />
     </template>
     <template v-slot:default>
       <div class="special-list">
-        <div class="special-item" v-for="item in specials" :key="item.id">
+        <div class="special-item" v-for="item in special" :key="item.id">
           <RouterLink to="/">
             <img :src="item.cover" alt />
             <div class="meta">
@@ -35,15 +34,17 @@
 </template>
 
 <script>
+import HomePanel from "@/views/home/components/HomePanel";
+import useLazyData from "@/hooks/useLazyData";
+import { getSpecial } from "@/api/home";
 export default {
   name: "HomeSpecial",
+  components: { HomePanel },
+  setup() {
+    const { target, result: special } = useLazyData(getSpecial);
+    return { target, special };
+  },
 };
-</script>
-<script setup>
-import HomePanel from "@/views/home/components/HomePanel";
-import useLazyData from "@/hooks/useLazyData.js";
-import { getSpecial } from "@/api/home.js";
-const { target, result: specials } = useLazyData(getSpecial);
 </script>
 
 <style scoped lang="less">

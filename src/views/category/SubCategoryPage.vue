@@ -3,21 +3,21 @@
     <div class="container">
       <XtxBread>
         <XtxBreadItem path="/">首页</XtxBreadItem>
-        <XtxBreadItem :path="`/category/${category.topCategory?.id}`"
-          >{{ category.topCategory?.name }}
-        </XtxBreadItem>
-        <transition mode="out-in" name="fade-right">
+        <XtxBreadItem :path="`/category/${category.topCategory?.id}`">{{
+          category.topCategory?.name
+        }}</XtxBreadItem>
+        <transition name="fade-right" mode="out-in">
           <XtxBreadItem :key="category.subCategory?.id">
             {{ category.subCategory?.name }}
           </XtxBreadItem>
         </transition>
       </XtxBread>
-      <!-- 筛选条件 -->
+      <!-- 筛选条件组件 -->
       <SubFilter @onFilterChanged="onFilterSortChanged" />
       <div class="goods-list">
-        <!--排序组件-->
+        <!-- 排序组件 -->
         <SubSort @onSortChanged="onFilterSortChanged" />
-        <!-- 商品列表 -->
+        <!-- 商品列表组件 -->
         <GoodsList :goods="goodsList.items" v-if="goodsList" />
         <!-- 无限列表加载组件 -->
         <XtxInfiniteLoading
@@ -35,17 +35,17 @@ import AppLayout from "@/components/AppLayout";
 import { useStore } from "vuex";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import { computed, ref, watch } from "vue";
-import SubFilter from "@/views/category/components/SubFilter.vue";
-import SubSort from "@/views/category/components/SubSort.vue";
-import { getGoodsList } from "@/api/category.js";
-import GoodsList from "@/views/category/components/GoodsList.vue";
-
+import SubFilter from "@/views/category/components/SubFilter";
+import SubSort from "@/views/category/components/SubSort";
+import GoodsList from "@/views/category/components/GoodsList";
+import { getGoodsList } from "@/api/category";
 export default {
   name: "SubCategoryPage",
-  components: { SubFilter, AppLayout, SubSort, GoodsList },
+  components: { GoodsList, SubSort, SubFilter, AppLayout },
   setup() {
-    // onBeforeRouteUpdate
+    // 获取面包屑导航需要的分类数据
     const category = useBread();
+    // 获取商品数据
     const { goodsList, onFilterSortChanged, loadMore, loading, finished } =
       useGoodsList();
 
@@ -92,6 +92,7 @@ function useBread() {
     return result;
   });
 }
+
 function useGoodsList() {
   // 用于存储从服务器端获取来的商品数据
   const goodsList = ref();
@@ -174,4 +175,10 @@ function useGoodsList() {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.goods-list {
+  background: #fff;
+  padding: 0 25px;
+  margin-top: 25px;
+}
+</style>

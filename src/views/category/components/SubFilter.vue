@@ -5,10 +5,10 @@
       <div class="head">品牌：</div>
       <div class="body">
         <a
+          href="javascript:"
           v-for="brand in filters?.brands"
           :key="brand.id"
           :class="{ active: filters.selectedBrandId === brand.id }"
-          href="javascript:"
           @click="
             filters.selectedBrandId = brand.id;
             updateSelectedFilters();
@@ -17,14 +17,14 @@
         >
       </div>
     </div>
-    <div v-for="item in filters?.saleProperties" :key="item.id" class="item">
+    <div class="item" v-for="item in filters?.saleProperties" :key="item.id">
       <div class="head">{{ item.name }}：</div>
       <div class="body">
         <a
+          href="javascript:"
           v-for="property in item.properties"
           :key="property.id"
           :class="{ active: property.name === item.selectedFilterName }"
-          href="javascript:"
           @click="
             item.selectedFilterName = property.name;
             updateSelectedFilters();
@@ -35,11 +35,11 @@
     </div>
   </div>
   <div v-else class="sub-filter">
-    <XtxSkeleton class="item" height="40px" width="800px" />
-    <XtxSkeleton class="item" height="40px" width="800px" />
-    <XtxSkeleton class="item" height="40px" width="600px" />
-    <XtxSkeleton class="item" height="40px" width="600px" />
-    <XtxSkeleton class="item" height="40px" width="600px" />
+    <XtxSkeleton class="item" width="800px" height="40px" />
+    <XtxSkeleton class="item" width="800px" height="40px" />
+    <XtxSkeleton class="item" width="600px" height="40px" />
+    <XtxSkeleton class="item" width="600px" height="40px" />
+    <XtxSkeleton class="item" width="600px" height="40px" />
   </div>
 </template>
 <script>
@@ -59,7 +59,6 @@ export default {
     return { filters, updateSelectedFilters, filterLoading };
   },
 };
-
 // 获取筛选条件
 function useFilters(emit) {
   // 用于存储最终的筛选条件数据
@@ -120,29 +119,24 @@ function useFilters(emit) {
   return { filters, getData, updateSelectedFilters, filterLoading };
 }
 </script>
-<style lang="less" scoped>
+<style scoped lang="less">
 // 筛选区
 .sub-filter {
   background: #fff;
   padding: 25px;
-
   .item {
     display: flex;
     line-height: 40px;
-
     .head {
       width: 80px;
       color: #999;
     }
-
     .body {
       flex: 1;
-
       a {
         margin-right: 36px;
         transition: all 0.3s;
         display: inline-block;
-
         &.active,
         &:hover {
           color: @xtxColor;
@@ -151,7 +145,6 @@ function useFilters(emit) {
     }
   }
 }
-
 .xtx-skeleton {
   padding: 10px 0;
 }

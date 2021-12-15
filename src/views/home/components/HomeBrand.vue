@@ -45,7 +45,7 @@
 
 <script>
 import HomePanel from "@/views/home/components/HomePanel";
-import useLazyData from "@/hooks/useLazyData.js";
+import useLazyData from "@/hooks/useLazyData";
 import { getBrands } from "@/api/home";
 import { ref } from "vue";
 export default {

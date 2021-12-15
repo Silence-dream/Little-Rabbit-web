@@ -1,5 +1,4 @@
 <template>
-  <!-- 新鲜好物 -->
   <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱" ref="target">
     <template v-slot:right>
       <XtxMore />
@@ -23,27 +22,16 @@
 <script>
 import HomePanel from "@/views/home/components/HomePanel";
 import { getNewGoods } from "@/api/home";
-import useLazyData from "@/hooks/useLazyData.js";
+import useLazyData from "@/hooks/useLazyData";
 import HomeSkeleton from "@/views/home/components/HomeSkeleton";
 export default {
   name: "HomeNew",
   components: { HomeSkeleton, HomePanel },
   setup() {
-    // const { homeNew, getData } = useHomeNew();
     const { target, result: homeNew } = useLazyData(getNewGoods);
-    return { target, homeNew };
+    return { homeNew, target };
   },
 };
-
-// function useHomeNew() {
-//   const homeNew = ref();
-//   const getData = () => {
-//     getNewGoods().then((data) => {
-//       homeNew.value = data.result;
-//     });
-//   };
-//   return { homeNew, getData };
-// }
 </script>
 <style scoped lang="less">
 .goods-list {
@@ -68,5 +56,8 @@ export default {
       color: @priceColor;
     }
   }
+}
+.home-skeleton {
+  top: 115px;
 }
 </style>

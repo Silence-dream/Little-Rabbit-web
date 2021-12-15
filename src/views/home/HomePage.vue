@@ -12,7 +12,7 @@
     <HomeBrand />
     <!-- 产品区块 -->
     <HomeProduct />
-    <!--  最新专题  -->
+    <!-- 最新专题 -->
     <HomeSpecial />
   </AppLayout>
 </template>
@@ -23,20 +23,20 @@ import HomeCategory from "@/views/home/components/HomeCategory";
 import HomeBanner from "@/views/home/components/HomeBanner";
 import HomeNew from "@/views/home/components/HomeNew";
 import HomeHot from "@/views/home/components/HomeHot";
-import HomeBrand from "@/views/home/components/HomeBrand.vue";
-import HomeProduct from "@/views/home/components/HomeProduct.vue";
-import HomeSpecial from "@/views/home/components/HomeSpecial.vue";
+import HomeBrand from "@/views/home/components/HomeBrand";
+import HomeProduct from "@/views/home/components/HomeProduct";
+import HomeSpecial from "@/views/home/components/HomeSpecial";
 export default {
   name: "HomePage",
   components: {
     HomeSpecial,
     HomeProduct,
     HomeBrand,
+    HomeHot,
     HomeNew,
     HomeBanner,
     HomeCategory,
     AppLayout,
-    HomeHot,
   },
 };
 </script>

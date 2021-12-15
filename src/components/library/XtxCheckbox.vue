@@ -1,13 +1,14 @@
 <template>
-  <!--  复选框组件-->
-  <div className="xtx-checkbox" @click="toggle">
-    <i className="iconfont icon-checked" v-if="isChecked"></i>
-    <i className="iconfont icon-unchecked" v-else></i>
-    <span><slot></slot></span>
+  <div class="xtx-checkbox" @click="toggle">
+    <i v-if="isChecked" class="iconfont icon-checked"></i>
+    <i v-else class="iconfont icon-unchecked"></i>
+    <span><slot /></span>
   </div>
 </template>
 <script>
+import { unref } from "vue";
 import { useVModel } from "@vueuse/core";
+
 export default {
   name: "XtxCheckbox",
   props: {
@@ -17,39 +18,43 @@ export default {
     },
   },
   setup(props, { emit }) {
-    // useVModel 实现双向数据绑定
-    // 将 props 中的 modelValue 实现双向数据绑定
-    // useModel 的返回值是一个新的响应式数据, 可以在当前模板中直接使用
     const isChecked = useVModel(props, "modelValue", emit);
-    // 修改复选框选中状态
+    // 控制复选框的选中状态
+    // const isChecked = ref(false);
+    // 控制复选项的选中状态
     const toggle = () => {
-      isChecked.value = !isChecked.value;
+      // 将当前值取反
+      isChecked.value = !unref(isChecked);
+      // 将值同步到父组件
+      // emit("update:modelValue", isChecked.value);
     };
-    return {
-      isChecked,
-      toggle,
-    };
+    // 监听 modelValue 值的变化
+    // watch(
+    //   () => props.modelValue,
+    //   () => {
+    //     // 当值发生变化以后 将值赋值给 isChecked
+    //     // 因为在当前组件中我们是通过 isChecked 来控制模板状态的
+    //     isChecked.value = props.modelValue;
+    //   }
+    // );
+    return { isChecked, toggle };
   },
 };
 </script>
-<style lang="less" scoped>
+<style scoped lang="less">
 .xtx-checkbox {
   display: inline-block;
   margin-right: 2px;
-
   .icon-checked {
     color: @xtxColor;
-
     ~ span {
       color: @xtxColor;
     }
   }
-
   i {
     position: relative;
     top: 1px;
   }
-
   span {
     margin-left: 2px;
   }

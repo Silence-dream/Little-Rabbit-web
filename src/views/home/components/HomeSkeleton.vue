@@ -1,5 +1,4 @@
 <template>
-  <!-- 骨架屏组件 -->
   <div class="home-skeleton">
     <div class="item" v-for="i in 4" :key="i" :style="{ backgroundColor: bg }">
       <XtxSkeleton

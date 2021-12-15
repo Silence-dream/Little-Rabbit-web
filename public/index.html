@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2143783_iq6z4ey5vu.css">
+    <script src="http://connect.qq.com/qc_jssdk.js" data-appid="100556005" data-redirecturi="http://www.corho.com:8080/#/login/callback"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- 将调用的http请求升级成https请求并调用在生产环境的时候 -->
-    <% if (process.env.NODE_ENV !== 'development') { %>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <% }
-    %>
   </head>
   <body>
     <noscript>

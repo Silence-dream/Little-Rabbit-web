@@ -1,25 +1,24 @@
 <template>
   <AppLayout>
-    <div class="xtx-goods-page">
+    <div class="xtx-goods-page" v-if="goodsDetail">
       <div class="container">
         <!-- 面包屑 -->
         <XtxBread>
           <XtxBreadItem path="/">首页</XtxBreadItem>
-          <XtxBreadItem>
-            {{ goodsDetail?.categories[1].name }}
-          </XtxBreadItem>
-          <XtxBreadItem path="/">
-            {{ goodsDetail?.categories[0].name }}
-          </XtxBreadItem>
-          <XtxBreadItem path="/">
-            {{ goodsDetail?.name }}
-          </XtxBreadItem>
+          <XtxBreadItem :path="`/category/${goodsDetail.categories[1].id}`">{{
+            goodsDetail.categories[1].name
+          }}</XtxBreadItem>
+          <XtxBreadItem
+            :path="`/category/sub/${goodsDetail.categories[0].id}`"
+            >{{ goodsDetail.categories[0].name }}</XtxBreadItem
+          >
+          <XtxBreadItem>{{ goodsDetail.name }}</XtxBreadItem>
         </XtxBread>
         <!-- 商品信息 -->
         <div class="goods-info">
           <!-- 左侧 -->
           <div class="media">
-            <GoodsImages :images="goodsDetail?.mainPictures" />
+            <GoodsImages :images="goodsDetail.mainPictures" />
             <!-- 商品售卖组件 -->
             <GoodsSales />
           </div>
@@ -27,9 +26,10 @@
           <div class="spec">
             <GoodsInfo :goods="goodsDetail" />
             <!-- 规格组件 skuId="1369155865461919746" -->
-            <!-- TODO 有报错识别不到对象属性 可以使用 ?来规避但是会引起无法切换选项 -->
+            <!-- 当用户选择的不是一个完整规格的时候 清除 skuId -->
             <GoodsSku
               @onSpecChanged="onSpecChanged"
+              @onSpecHalfChanged="goodsDetail.currentSkuId = null"
               :skus="goodsDetail.skus"
               :specs="goodsDetail.specs"
             />
@@ -37,26 +37,33 @@
             <XtxNumberBox
               label="数量"
               v-model="goodsCount"
-              :max="goodsDetail?.inventory"
+              :max="goodsDetail.inventory"
             />
             <!-- 加入购物车 -->
-            <XtxButton type="primary" style="margin-top: 15px"
+            <XtxButton
+              @click="addGoodsToCart"
+              type="primary"
+              style="margin-top: 15px"
               >加入购物车</XtxButton
             >
           </div>
         </div>
         <!-- 商品推荐 -->
-        <GoodsRelevant></GoodsRelevant>
+        <GoodsRelevant :goodsId="goodsDetail.id"></GoodsRelevant>
         <!-- 商品详情 -->
         <div class="goods-footer">
           <div class="goods-article">
             <!-- 商品+评价 -->
-            <div class="goods-tabs"></div>
+            <GoodsTab />
             <!-- 注意事项 -->
-            <div class="goods-warn"></div>
+            <GoodsWarn />
           </div>
           <!-- 24热榜 -->
-          <div class="goods-aside"></div>
+          <div class="goods-aside">
+            <GoodsHot :type="1" />
+            <GoodsHot :type="2" />
+            <GoodsHot :type="3" />
+          </div>
         </div>
       </div>
     </div>
@@ -64,33 +71,42 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router";
+import GoodsRelevant from "@/views/goods/components/GoodsRelevant";
+import AppLayout from "@/components/AppLayout";
 import { provide, ref } from "vue";
-import { getGoodsDetail } from "@/api/goods.js";
-import GoodsRelevant from "@/views/goods/components/GoodsRelevant.vue";
-import AppLayout from "@/components/AppLayout.vue";
-import GoodsImages from "@/views/goods/components/GoodsImages.vue";
-import GoodsSales from "@/views/goods/components/GoodsSales.vue";
-import GoodsInfo from "@/views/goods/components/GoodsInfo.vue";
-import GoodsSku from "@/views/goods/components/GoodsSku.vue";
-import XtxButton from "@/components/library/XtxButton.vue";
-
+import { getGoodsDetail } from "@/api/goods";
+import { useRoute } from "vue-router";
+import GoodsImages from "@/views/goods/components/GoodsImages";
+import GoodsSales from "@/views/goods/components/GoodsSales";
+import GoodsInfo from "@/views/goods/components/GoodsInfo";
+import GoodsSku from "@/views/goods/components/GoodsSku";
+import GoodsTab from "@/views/goods/components/GoodsTab";
+import GoodsHot from "@/views/goods/components/GoodsHot";
+import GoodsWarn from "@/views/goods/components/GoodsWarn";
+import Message from "@/components/library/Message";
+import { useStore } from "vuex";
 export default {
   name: "GoodsDetailPage",
   components: {
+    GoodsWarn,
+    GoodsHot,
+    GoodsTab,
+    GoodsSku,
+    GoodsInfo,
+    GoodsSales,
     GoodsImages,
     GoodsRelevant,
     AppLayout,
-    GoodsSales,
-    GoodsInfo,
-    GoodsSku,
-    XtxButton,
   },
   setup() {
     // 获取商品详情数据以及获取商品详情数据的方法
     const { goodsDetail, getData } = useGoodsDetail();
     // 获取路由信息对象
     const route = useRoute();
+    // 获取 store 对象
+    const store = useStore();
+    // 用于存储用户选择的商品数量
+    const goodsCount = ref(1);
     // 发送请求获取商品详情信息
     getData(route.params.id);
     // 当用户选择完整的规格以后 更新视图
@@ -98,17 +114,47 @@ export default {
       goodsDetail.value.price = data.price;
       goodsDetail.value.oldPrice = data.oldPrice;
       goodsDetail.value.inventory = data.inventory;
+      goodsDetail.value.currentSkuId = data.skuId;
+      goodsDetail.value.currentAttrsText = data.attrsText;
     };
     // 将商品详情数据开放到子组件
     provide("goodsDetail", goodsDetail);
-    // 用于存储用户选择的商品数量
-    const goodsCount = ref(1);
-    return {
-      getData,
-      goodsDetail,
-      onSpecChanged,
-      goodsCount,
+    // 将商品加入到购物车中
+    const addGoodsToCart = () => {
+      // 1. 判断用户是否选择了规格, 如果用户没有选择规格的话, 不能让他将商品加入购物车
+      if (!goodsDetail.value.currentSkuId) {
+        Message({ type: "warn", text: "请选择商品规格" });
+        return;
+      }
+      // 2. 收集商品信息
+      const goods = {
+        // 商品id
+        id: goodsDetail.value.id,
+        // 商品 skuId
+        skuId: goodsDetail.value.currentSkuId,
+        // 商品名称
+        name: goodsDetail.value.name,
+        // 商品规格属性文字
+        attrsText: goodsDetail.value.currentAttrsText,
+        // 商品图片
+        picture: goodsDetail.value.mainPictures[0],
+        // 商品原价
+        price: goodsDetail.value.oldPrice,
+        // 商品现价
+        nowPrice: goodsDetail.value.price,
+        // 是否选中
+        selected: true,
+        // 商品库存
+        stock: goodsDetail.value.inventory,
+        // 用户选择的商品数量
+        count: goodsCount.value,
+        // 是否为有效商品
+        isEffective: true,
+      };
+      // 3. 将商品加入购物车
+      store.dispatch("cart/addGoodsToCart", goods);
     };
+    return { goodsDetail, onSpecChanged, goodsCount, addGoodsToCart };
   },
 };
 // 用于获取商品详细信息的方法

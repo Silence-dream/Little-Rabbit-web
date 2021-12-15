@@ -1,18 +1,6 @@
 <template>
-  <!-- 人气推荐组件  -->
-  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过" ref="target">
+  <HomePanel title="人气推荐" subTitle="人气爆款 不容错过" ref="target">
     <ul class="goods-list" v-if="homeHot">
-      <!-- 测试代码  -->
-      <!--      <li>-->
-      <!--        <RouterLink to="/">-->
-      <!--          <img-->
-      <!--            src="https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/popular_1.jpg"-->
-      <!--            alt=""-->
-      <!--          />-->
-      <!--          <p class="name">特惠推荐</p>-->
-      <!--          <p class="desc">它们最实惠</p>-->
-      <!--        </RouterLink>-->
-      <!--      </li>-->
       <li v-for="item in homeHot" :key="item.id">
         <RouterLink to="/">
           <img :src="item.picture" alt="" />
@@ -28,24 +16,18 @@
 </template>
 
 <script>
-import HomePanel from "@/views/home/components/HomePanel.vue";
+import HomePanel from "@/views/home/components/HomePanel";
+import { getHotGoods } from "@/api/home";
+import useLazyData from "@/hooks/useLazyData";
+import HomeSkeleton from "@/views/home/components/HomeSkeleton";
 export default {
   name: "HomeHot",
-  components: { HomePanel },
+  components: { HomeSkeleton, HomePanel },
+  setup() {
+    const { target, result: homeHot } = useLazyData(getHotGoods);
+    return { homeHot, target };
+  },
 };
-</script>
-<script setup>
-import { getHotGoods } from "@/api/home.js";
-import useLazyData from "@/hooks/useLazyData.js";
-import HomeSkeleton from "@/views/home/components/HomeSkeleton.vue";
-// 存储人气推荐数据
-// const homeHot = ref();
-// getHotGoods().then((res) => {
-//   homeHot.value = res.result;
-// });
-
-// 懒加载写法
-const { target, result: homeHot } = useLazyData(getHotGoods);
 </script>
 <style scoped lang="less">
 .goods-list {
@@ -70,5 +52,8 @@ const { target, result: homeHot } = useLazyData(getHotGoods);
       font-size: 18px;
     }
   }
+}
+.home-skeleton {
+  top: 115px;
 }
 </style>

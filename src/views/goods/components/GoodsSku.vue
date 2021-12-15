@@ -24,7 +24,6 @@
 </template>
 <script>
 import powerset from "@/vendors/powerSet";
-
 export default {
   name: "GoodsSku",
   props: {
@@ -196,7 +195,14 @@ function sendDataToParent(specs, pathMap, skus, emit) {
       oldPrice: target.oldPrice,
       // 商品的库存, 在用户选择商品数量的时候使用
       inventory: target.inventory,
+      // 用户选择的规格名称字符串
+      attrsText: target.specs
+        .map((spec) => `${spec.name}: ${spec.valueName}`)
+        .join(" "),
     });
+  } else {
+    // 当用户选择的不是一个完整规格的时候, 告诉父组件清除 skuId
+    emit("onSpecHalfChanged");
   }
 }
 </script>

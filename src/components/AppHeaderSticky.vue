@@ -1,5 +1,4 @@
 <template>
-  <!-- 粘性定位头  -->
   <div class="app-header-sticky" :class="{ show: scrollTop > 78 }">
     <div class="container" v-show="scrollTop > 78">
       <RouterLink to="/" class="logo" />
@@ -13,16 +12,17 @@
 </template>
 
 <script>
-export default {
-  name: "AppHeaderSticky",
-};
-</script>
-
-<script setup>
 import AppHeaderNav from "@/components/AppHeaderNav";
 import { useWindowScroll } from "@vueuse/core";
 
-const { y: scrollTop } = useWindowScroll();
+export default {
+  name: "AppHeaderSticky",
+  components: { AppHeaderNav },
+  setup() {
+    const { y: scrollTop } = useWindowScroll();
+    return { scrollTop };
+  },
+};
 </script>
 
 <style scoped lang="less">

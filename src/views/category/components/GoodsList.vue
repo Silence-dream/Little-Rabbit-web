@@ -7,7 +7,6 @@
 </template>
 <script>
 import GoodsItem from "@/views/category/components/GoodsItem";
-
 export default {
   name: "GoodsList",
   components: { GoodsItem },

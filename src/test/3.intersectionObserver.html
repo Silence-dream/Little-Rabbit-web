@@ -13,7 +13,6 @@
   const observer = new IntersectionObserver(([{isIntersecting}]) => {
     // 3. 判断元素是否进入可视区
     if (isIntersecting) {
-      console.log("进入了")
       // 4. 停止监听
       observer.unobserve(box)
     }

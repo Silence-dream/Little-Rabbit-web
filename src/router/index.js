@@ -1,6 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-
 const HomePage = () => import("@/views/home/HomePage");
+const TopCategoryPage = () => import("@/views/category/TopCategoryPage");
+const SubCategoryPage = () => import("@/views/category/SubCategoryPage");
+const GoodsDetailPage = () => import("@/views/goods/GoodsDetailPage");
+const LoginPage = () => import("@/views/login/LoginPage");
+const LoginCallbackPage = import("@/views/login/LoginCallbackPage");
 
 const routes = [
   {
@@ -9,34 +13,32 @@ const routes = [
   },
   {
     path: "/category/:id",
-    component: () =>
-      import(
-        /* webpackChunkName: "TopCategoryPage" */ "@/views/category/TopCategoryPage.vue"
-      ),
+    component: TopCategoryPage,
   },
   {
     path: "/category/sub/:id",
-    component: () =>
-      import(
-        /* webpackChunkName: "SubCategoryPage" */ "@/views/category/SubCategoryPage.vue"
-      ),
+    component: SubCategoryPage,
   },
   {
     path: "/goods/:id",
-    component: () =>
-      import(
-        /* webpackChunkName: "GoodsDetailPage" */ "@/views/goods/GoodsDetailPage.vue"
-      ),
+    component: GoodsDetailPage,
+  },
+  {
+    path: "/login",
+    component: LoginPage,
+  },
+  {
+    path: "/login/callback",
+    component: LoginCallbackPage,
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
-  // 路由切换
-  scrollBehavior: () => {
+  scrollBehavior() {
     return { top: 0 };
   },
+  routes,
 });
 
 export default router;

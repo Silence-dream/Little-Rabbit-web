@@ -1,5 +1,4 @@
 <template>
-  <!-- 首页布局文件  -->
   <AppTopNav />
   <AppHeader />
   <AppHeaderSticky />
