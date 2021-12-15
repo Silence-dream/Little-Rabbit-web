@@ -27,10 +27,11 @@
           <div class="spec">
             <GoodsInfo :goods="goodsDetail" />
             <!-- 规格组件 skuId="1369155865461919746" -->
+            <!-- TODO 有报错识别不到对象属性 可以使用 ?来规避但是会引起无法切换选项 -->
             <GoodsSku
               @onSpecChanged="onSpecChanged"
-              :skus="goodsDetail?.skus"
-              :specs="goodsDetail?.specs"
+              :skus="goodsDetail.skus"
+              :specs="goodsDetail.specs"
             />
             <!-- 商品数量选择组件 -->
             <XtxNumberBox
@@ -38,6 +39,10 @@
               v-model="goodsCount"
               :max="goodsDetail?.inventory"
             />
+            <!-- 加入购物车 -->
+            <XtxButton type="primary" style="margin-top: 15px"
+              >加入购物车</XtxButton
+            >
           </div>
         </div>
         <!-- 商品推荐 -->
@@ -68,6 +73,7 @@ import GoodsImages from "@/views/goods/components/GoodsImages.vue";
 import GoodsSales from "@/views/goods/components/GoodsSales.vue";
 import GoodsInfo from "@/views/goods/components/GoodsInfo.vue";
 import GoodsSku from "@/views/goods/components/GoodsSku.vue";
+import XtxButton from "@/components/library/XtxButton.vue";
 
 export default {
   name: "GoodsDetailPage",
@@ -78,6 +84,7 @@ export default {
     GoodsSales,
     GoodsInfo,
     GoodsSku,
+    XtxButton,
   },
   setup() {
     // 获取商品详情数据以及获取商品详情数据的方法
