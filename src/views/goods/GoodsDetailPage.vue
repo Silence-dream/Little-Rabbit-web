@@ -75,7 +75,7 @@ import GoodsRelevant from "@/views/goods/components/GoodsRelevant";
 import AppLayout from "@/components/AppLayout";
 import { provide, ref } from "vue";
 import { getGoodsDetail } from "@/api/goods";
-import { useRoute } from "vue-router";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import GoodsImages from "@/views/goods/components/GoodsImages";
 import GoodsSales from "@/views/goods/components/GoodsSales";
 import GoodsInfo from "@/views/goods/components/GoodsInfo";
@@ -85,6 +85,7 @@ import GoodsHot from "@/views/goods/components/GoodsHot";
 import GoodsWarn from "@/views/goods/components/GoodsWarn";
 import Message from "@/components/library/Message";
 import { useStore } from "vuex";
+
 export default {
   name: "GoodsDetailPage",
   components: {
@@ -149,7 +150,7 @@ export default {
         // 用户选择的商品数量
         count: goodsCount.value,
         // 是否为有效商品
-        isEffective: true,
+        isEffective: false,
       };
       // 3. 将商品加入购物车
       store.dispatch("cart/addGoodsToCart", goods);
@@ -169,6 +170,11 @@ function useGoodsDetail() {
       goodsDetail.value = data.result;
     });
   };
+  // 当路由参数发生变化的时候 (商品id)
+  onBeforeRouteUpdate((to) => {
+    // 重新向服务器端发送请求获取商品详情数据
+    getData(to.params.id);
+  });
   // 返回商品详情数据和获取商品详情数据的方法
   return { goodsDetail, getData };
 }

@@ -20,31 +20,38 @@
             </thead>
             <!-- 有效商品 -->
             <tbody>
-              <tr v-for="i in 3" :key="i">
+              <tr v-for="item in effectiveGoodsList" :key="item.id">
                 <td><XtxCheckbox /></td>
                 <td>
                   <div class="goods">
-                    <RouterLink to="/"
-                      ><img
-                        src="https://yanxuan-item.nosdn.127.net/13ab302f8f2c954d873f03be36f8fb03.png"
-                        alt=""
+                    <RouterLink :to="`/goods/${item.id}`"
+                      ><img :src="item.picture" alt=""
                     /></RouterLink>
                     <div>
                       <p class="name ellipsis">
-                        和手足干裂说拜拜 手足皲裂修复霜
+                        {{ item.name }}
                       </p>
                       <!-- 选择规格组件 -->
                     </div>
                   </div>
                 </td>
                 <td class="tc">
-                  <p>&yen;200.00</p>
-                  <p>比加入时降价 <span class="red">&yen;20.00</span></p>
+                  <p>&yen;{{ item.nowPrice }}</p>
+                  <p v-if="item.price - item.nowPrice > 0">
+                    比加入时降价
+                    <span class="red"
+                      >&yen;{{ (item.price - item.nowPrice).toFixed(2) }}</span
+                    >
+                  </p>
                 </td>
                 <td class="tc">
                   <XtxNumberBox></XtxNumberBox>
                 </td>
-                <td class="tc"><p class="f16 red">&yen;200.00</p></td>
+                <td class="tc">
+                  <p class="f16 red">
+                    &yen;{{ (item.count * Number(item.nowPrice)).toFixed(2) }}
+                  </p>
+                </td>
                 <td class="tc">
                   <p><a href="javascript:">移入收藏夹</a></p>
                   <p><a class="green" href="javascript:">删除</a></p>
@@ -57,26 +64,32 @@
               <tr>
                 <td colspan="6"><h3 class="tit">失效商品</h3></td>
               </tr>
-              <tr v-for="i in 3" :key="i">
+              <tr v-for="item in invalidGoodsList" :key="item.id">
                 <td></td>
                 <td>
                   <div class="goods">
-                    <RouterLink to="/"
-                      ><img
-                        src="https://yanxuan-item.nosdn.127.net/13ab302f8f2c954d873f03be36f8fb03.png"
-                        alt=""
+                    <RouterLink :to="`/goods/${item.id}`"
+                      ><img :src="item.picture" alt=""
                     /></RouterLink>
                     <div>
                       <p class="name ellipsis">
-                        和手足干裂说拜拜 手足皲裂修复霜
+                        {{ item.name }}
                       </p>
-                      <p class="attr">颜色：粉色 尺寸：14cm 产地：中国</p>
+                      <p class="attr">
+                        {{ item.attrsText }}
+                      </p>
                     </div>
                   </div>
                 </td>
-                <td class="tc"><p>&yen;200.00</p></td>
-                <td class="tc">1</td>
-                <td class="tc"><p>&yen;200.00</p></td>
+                <td class="tc">
+                  <p>&yen;{{ item.nowPrice }}</p>
+                </td>
+                <td class="tc">{{ item.count }}</td>
+                <td class="tc">
+                  <p>
+                    &yen;{{ (item.count * Number(item.nowPrice)).toFixed(2) }}
+                  </p>
+                </td>
                 <td class="tc">
                   <p><a class="green" href="javascript:">删除</a></p>
                   <p><a href="javascript:">找相似</a></p>
@@ -94,8 +107,9 @@
             <a href="javascript:">清空失效商品</a>
           </div>
           <div class="total">
-            共 7 件商品，已选择 2 件，商品合计：
-            <span class="red">¥400</span>
+            共 {{ effectiveGoodsCount }} 件商品，已选择
+            {{ selectedGoodsCount }} 件，商品合计：
+            <span class="red">¥{{ selectedGoodsPrice }}</span>
             <XtxButton type="primary">下单结算</XtxButton>
           </div>
         </div>
@@ -108,10 +122,45 @@
 <script>
 import GoodsRelevant from "@/views/goods/components/GoodsRelevant";
 import AppLayout from "@/components/AppLayout";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   name: "CartPage",
   components: { GoodsRelevant, AppLayout },
+  setup() {
+    // 获取 store 对象
+    const store = useStore();
+    // 更新购物车中的商品数据
+    store.dispatch("cart/updateGoodsBySkuId");
+    // 获取有效商品列表
+    const effectiveGoodsList = computed(
+      () => store.getters["cart/effectiveGoodsList"]
+    );
+    // 获取有效商品的数量
+    const effectiveGoodsCount = computed(
+      () => store.getters["cart/effectiveGoodsCount"]
+    );
+    // 获取无效商品列表
+    const invalidGoodsList = computed(
+      () => store.getters["cart/invalidGoodsList"]
+    );
+    // 获取用户选择的商品总价
+    const selectedGoodsPrice = computed(
+      () => store.getters["cart/selectedGoodsPrice"]
+    );
+    // 获取用户选择的商品总数
+    const selectedGoodsCount = computed(
+      () => store.getters["cart/selectedGoodsCount"]
+    );
+    return {
+      effectiveGoodsList,
+      invalidGoodsList,
+      selectedGoodsPrice,
+      selectedGoodsCount,
+      effectiveGoodsCount,
+    };
+  },
 };
 </script>
 <style scoped lang="less">
