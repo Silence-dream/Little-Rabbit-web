@@ -1,8 +1,8 @@
 <template>
   <div class="cart">
-    <a class="curr" href="#">
+    <RouterLink class="curr" to="/cart">
       <i class="iconfont icon-cart"></i><em>{{ effectiveGoodsCount }}</em>
-    </a>
+    </RouterLink>
     <div class="layer">
       <div class="list">
         <div class="item" v-for="item in effectiveGoodsList" :key="item.id">
